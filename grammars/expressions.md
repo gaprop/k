@@ -15,7 +15,6 @@ LiteralExpr ::= CHAR_LITERAL
              | true | false
              ...
 
-
 OperatorExpr ::= NegationExpr
               |  ArithmeticOrLogicalExpr
               |  ComparisonExpr

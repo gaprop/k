@@ -1,8 +1,9 @@
 module Main (main) where
 
-import Lib
+import AST
 
 import Text.ParserCombinators.Parsec
 
 main :: IO ()
-main = someFunc
+main = undefined
+-- main = someFunc

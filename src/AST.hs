@@ -1,6 +1,4 @@
-module AST
-    ( someFunc
-    ) where
+module AST where
 
 data Expr 
   = NoBlock ExprWithoutBlock
@@ -17,6 +15,7 @@ data LiteralExpr
   | IntegerLiteral Integer
   | FloatLiteral Float
   | TrueVal | FalseVal
+  deriving (Show)
 
 data OperatorExpr 
   = Negation NegationExpr
@@ -45,4 +44,9 @@ data ComparisonExpr
   | NotEqual Expr Expr
   | Less     Expr Expr
   | Greater  Expr Expr
-  | Greater  Expr Expr
+  -- | Greater  Expr Expr
+  -- FIXME: We can do these smarter
+
+data LazyBooleanExpr
+  = Or  Expr Expr
+  | And Expr Expr
