@@ -18,12 +18,12 @@ data LiteralExpr
   deriving (Show)
 
 data OperatorExpr 
-  = Negation NegationExpr
+  = Negation NegExpr
   | ArithmeticOrLogical ArithmeticOrLogicalExpr 
   | Comparison ComparisonExpr
   | LazyBoolean LazyBooleanExpr
 
-data NegationExpr
+data NegExpr
   = Negative Expr
   | Not Expr
 
@@ -40,13 +40,29 @@ data ArithmeticOrLogicalExpr -- Perhaps not create this and just put it into the
   | RightShift Expr Expr
 
 data ComparisonExpr 
-  = Equal    Expr Expr
-  | NotEqual Expr Expr
-  | Less     Expr Expr
-  | Greater  Expr Expr
+  = Equal     Expr Expr
+  | NotEqual  Expr Expr
+  | Less      Expr Expr
+  | LessEq    Expr Expr
+  | Greater   Expr Expr
+  | GreaterEq Expr Expr
   -- | Greater  Expr Expr
   -- FIXME: We can do these smarter
 
 data LazyBooleanExpr
   = Or  Expr Expr
   | And Expr Expr
+
+data AssignmentExpr = Assign Expr Expr
+
+data CompAssignmentExpr
+  = CompPlus       Expr Expr
+  | CompMinus      Expr Expr
+  | CompTimes      Expr Expr
+  | CompDiv        Expr Expr
+  | CompModulo     Expr Expr
+  | CompByteAnd    Expr Expr
+  | CompByteOr     Expr Expr
+  | CompByteXor    Expr Expr
+  | CompLeftShift  Expr Expr
+  | CompRightShift Expr Expr
