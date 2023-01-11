@@ -3,7 +3,7 @@ module AST where
 -- FIXME: This can propably be merged
 data Expr 
   = NoBlock ExprWithoutBlock
-  | Block ExprWithBlock
+  -- | Block ExprWithBlock
   deriving (Show)
 
 data ExprWithoutBlock 
@@ -11,9 +11,9 @@ data ExprWithoutBlock
   | Literal LiteralExpr
   deriving (Show)
 
-data ExprWithBlock
-  = BlockExpr [Stmt] ExprWithoutBlock -- Perhaps we should just remove the last expr so that the last element in a block has to be a return statement
-  deriving (Show)
+-- data ExprWithBlock
+  -- = BlockExpr [Stmt] ExprWithoutBlock -- Perhaps we should just remove the last expr so that the last element in a block has to be a return statement
+  -- deriving (Show)
 
 data LiteralExpr 
   = CharLiteral Char
@@ -84,6 +84,7 @@ data CompAssignmentExpr
 -- Statements
 type Ident = String
 type FuncParams = [Ident]
+type Program = [Stmt]
 
 -- FIXME: This can be merged withs its parts
 data Stmt
