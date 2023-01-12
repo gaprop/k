@@ -6,7 +6,7 @@ Statements ::= ";" <!-- Skal den her være her -->
              | ExpressionStatement
              | Item
 
-LetStatement ::= "let" IDENT ("=" Expr)? ";"
+LetStatement ::= "let" IDENT (":" Type)? ("=" Expr)? ";"
 
 Item ::= Function
       |  ...

@@ -9,6 +9,7 @@ data Expr
 data ExprWithoutBlock 
   = Operator OperatorExpr
   | Literal LiteralExpr
+  | Function Ident FuncParams [Stmt] -- Here we make the block expr explicit, however it could be moved into its own data type.
   deriving (Show)
 
 -- data ExprWithBlock
@@ -83,12 +84,20 @@ data CompAssignmentExpr
 
 -- Statements
 type Ident = String
-type FuncParams = [Ident]
+type FuncParams = [(Ident, Option Type)]
 type Program = [Stmt]
 
--- FIXME: This can be merged withs its parts
 data Stmt
-  = Function Ident FuncParams [Stmt] -- Here we make the block expr explicit, however it could be moved into its own data type.
-  | LetStmt Ident Expr
+  -- = Function Ident FuncParams [Stmt] -- Here we make the block expr explicit, however it could be moved into its own data type.
+  = LetStmt Ident (Option Type) Expr
+  | ConstStmt Ident (Option Type) Expr
+  | ExprStmt Expr
   deriving (Show)
 
+data Type 
+  = TChar
+  | TString
+  | TInt
+  | TFloat
+  | TBool
+  | TFun
