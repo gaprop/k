@@ -33,20 +33,21 @@ parseStmt =  parseLetStmt
 parseItem :: Parser Stmt
 parseItem = parseFunc
 
-parseFunc :: Parser Stmt
-parseFunc = do
-  lexeme $ string "fn"
-  funcName <- lexeme $ parseIdent
-  idents <- between (lexeme $ string "(") (lexeme $ string ")") $ sepBy (lexeme parseIdent) (lexeme $ char ',')
-  stmts <- between (lexeme $ string "{") (lexeme $ string "}") $ many parseStmt
-  return $ Function funcName idents stmts
-
 parseLetStmt :: Parser Stmt
 parseLetStmt = do
   lexeme $ string "let"
   ident <- lexeme $ parseIdent
+  type' <- optionMaybe (do char ':'; parseType)
   lexeme $ char '='
   expr <- parseExpr
   lexeme $ char ';'
   return $ LetStmt ident expr
+
+parseType :: Parser Type
+parseType =  string "char"
+         <|> string "string"
+         <|> string "int" -- Change to u32 or whatever later
+         <|> string "float" -- Change to f32 or whatever later
+         <|> string "bool"
+         <|> string "fun" -- FIXME: Tempoary
 

@@ -4,13 +4,11 @@ module AST where
 data Expr 
   = NoBlock ExprWithoutBlock
   -- | Block ExprWithBlock
-  deriving (Show)
 
 data ExprWithoutBlock 
   = Operator OperatorExpr
   | Literal LiteralExpr
   | Function Ident FuncParams [Stmt] -- Here we make the block expr explicit, however it could be moved into its own data type.
-  deriving (Show)
 
 -- data ExprWithBlock
   -- = BlockExpr [Stmt] ExprWithoutBlock -- Perhaps we should just remove the last expr so that the last element in a block has to be a return statement
@@ -23,19 +21,16 @@ data LiteralExpr
   | IntegerLiteral Integer
   | FloatLiteral Float
   | TrueVal | FalseVal
-  deriving (Show)
 
 data OperatorExpr 
   = Negation NegExpr
   | ArithmeticOrLogical ArithmeticOrLogicalExpr 
   | Comparison ComparisonExpr
   | LazyBoolean LazyBooleanExpr
-  deriving (Show)
 
 data NegExpr
   = Negative Expr
   | Not Expr
-  deriving (Show)
 
 data ArithmeticOrLogicalExpr -- Perhaps not create this and just put it into the operator Expr structure
   = Plus       Expr Expr
@@ -48,7 +43,6 @@ data ArithmeticOrLogicalExpr -- Perhaps not create this and just put it into the
   | ByteXor    Expr Expr
   | LeftShift  Expr Expr
   | RightShift Expr Expr
-  deriving (Show)
 
 data ComparisonExpr 
   = Equal     Expr Expr
@@ -57,17 +51,14 @@ data ComparisonExpr
   | LessEq    Expr Expr
   | Greater   Expr Expr
   | GreaterEq Expr Expr
-  deriving (Show)
   -- | Greater  Expr Expr
   -- FIXME: We can do these smarter
 
 data LazyBooleanExpr
   = Or  Expr Expr
   | And Expr Expr
-  deriving (Show)
 
 data AssignmentExpr = Assign Expr Expr
-  deriving (Show)
 
 data CompAssignmentExpr
   = CompPlus       Expr Expr
@@ -80,19 +71,17 @@ data CompAssignmentExpr
   | CompByteXor    Expr Expr
   | CompLeftShift  Expr Expr
   | CompRightShift Expr Expr
-  deriving (Show)
 
 -- Statements
 type Ident = String
-type FuncParams = [(Ident, Option Type)]
+type FuncParams = [(Ident, Maybe Type)]
 type Program = [Stmt]
 
 data Stmt
   -- = Function Ident FuncParams [Stmt] -- Here we make the block expr explicit, however it could be moved into its own data type.
-  = LetStmt Ident (Option Type) Expr
-  | ConstStmt Ident (Option Type) Expr
+  = LetStmt Ident (Maybe Type) Expr
+  | ConstStmt Ident (Maybe Type) Expr
   | ExprStmt Expr
-  deriving (Show)
 
 data Type 
   = TChar

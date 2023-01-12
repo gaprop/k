@@ -1,6 +1,7 @@
 module Parser where
 
 import AST
+import Stmt
 import Text.ParserCombinators.Parsec
 import Text.ParserCombinators.Parsec.Number
 
@@ -12,6 +13,20 @@ parseExprWithoutBlock =
                          try (fmap Operator parseOperExpr )
                      <|> try (fmap Literal parseLitExpr)
 
+
+parseFunc :: Parser ExprWithoutBlock
+parseFunc = do
+  funcName <- lexeme $ parseIdent
+  idents <- between (lexeme $ string "(") (lexeme $ string ")") $ sepBy (lexeme parseFuncParam) (lexeme $ char ',')
+  lexeme $ string "=>"
+  stmts <- between (lexeme $ string "{") (lexeme $ string "}") $ many parseStmt
+  return $ Function funcName idents stmts
+
+parseFuncParam :: Parser FuncParams
+parseFuncParam = do
+  ident <- lexeme $ parseIdent
+  type' <- optionMaybe (do lexeme $ char ':'; parseType)
+  return (ident, type')
 
 -- LiteralExpr
 
